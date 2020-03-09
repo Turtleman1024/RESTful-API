@@ -11,14 +11,14 @@ namespace RESTful_API.Controllers
 
     public class GetController : Controller
     {
-        private List<Get> _post;
+        private List<Get> _get;
 
         public GetController()
         {
-            _post = new List<Get>();
+            _get = new List<Get>();
             for (int i = 0; i < 5; i++)
             {
-                _post.Add(new Get
+                _get.Add(new Get
                 {
                     Id = Guid.NewGuid().ToString()
                 });
@@ -28,7 +28,7 @@ namespace RESTful_API.Controllers
         [HttpGet(ApiRoutes.Gets.GetAll)]
         public IActionResult GetAll()
         {
-            return Ok(_post);
+            return Ok(_get);
         }
     }
 }
