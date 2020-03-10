@@ -85,5 +85,20 @@ namespace RESTful_API.Controllers
             return Created(locationUri, response);
         }
         #endregion
+
+        #region Delete
+        [HttpDelete(ApiRoutes.Trips.Delete)]
+        public IActionResult Delete([FromRoute] Guid tripId)
+        {
+            var deleted = _tripService.DeleteTrip(tripId);
+
+            if (deleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
+        }
+        #endregion
     }
 }

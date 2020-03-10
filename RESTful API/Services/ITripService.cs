@@ -13,5 +13,7 @@ namespace RESTful_API.Services
         Trip GetTripById(Guid postId);
 
         bool UpdateTrip(Trip postToUpdate);
+
+        bool DeleteTrip(Guid tripId);
     }
 }

@@ -23,6 +23,18 @@ namespace RESTful_API.Services
             }
         }
 
+        public bool DeleteTrip(Guid tripId)
+        {
+            var trip = GetTripById(tripId);
+            if(trip == null)
+            {
+                return false;
+            }
+
+            _trips.Remove(trip);
+            return true;
+        }
+
         public Trip GetTripById(Guid postId)
         {
             return _trips.SingleOrDefault(x => x.Id == postId);
