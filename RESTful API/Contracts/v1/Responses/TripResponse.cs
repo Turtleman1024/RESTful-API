@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RESTful_API.Contracts.v1.Responses
 {
-    public class PostResponse
+    public class TripResponse
     {
         public Guid Id { get; set; }
     }

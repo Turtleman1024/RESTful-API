@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace RESTful_API.Contracts.v1.Requests
 {
-    public class UpdatePostRequest
+    public class CreateTripRequest
     {
-        public string Name { get; set; }
+        public Guid Id { get; set; }
     }
 }

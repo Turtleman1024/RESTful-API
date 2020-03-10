@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RESTful_API.DomainModels
 {
-    public class Post
+    public class Trip
     {
         public Guid Id { get; set; }
 

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RESTful_API.Services
 {
-    public interface IPostService
+    public interface ITripService
     {
-        List<Post> GetPosts();
+        List<Trip> GetTrips();
 
-        Post GetPostById(Guid postId);
+        Trip GetTripById(Guid postId);
 
-        bool UpdatePost(Post postToUpdate);
+        bool UpdateTrip(Trip postToUpdate);
     }
 }

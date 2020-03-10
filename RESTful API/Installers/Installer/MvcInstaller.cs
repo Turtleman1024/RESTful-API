@@ -17,7 +17,7 @@ namespace RESTful_API.Installers
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "RESTful API", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Trip RESTful API", Version = "v1" });
             });
         }
     }

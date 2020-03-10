@@ -11,17 +11,17 @@ namespace RESTful_API.Contracts
         public const string Version = "v1";
         public const string Base = Root + "/" + Version;
 
-        public static class Posts
+        public static class Trips
         {
-            public const string GetAll = Base + "/posts";
+            public const string GetAll = Base + "/trips";
 
-            public const string Get = Base + "/posts/{postId}";
+            public const string Get = Base + "/trips/{tripId}";
 
-            public const string Update = Base + "/posts/{postId}";
+            public const string Update = Base + "/trips/{tripId}";
 
-            public const string Delete = Base + "/posts/{postId}";
+            public const string Delete = Base + "/trips/{tripId}";
 
-            public const string Create = Base + "/posts";
+            public const string Create = Base + "/trips";
         }
     }
 }
