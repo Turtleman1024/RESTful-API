@@ -20,7 +20,8 @@ namespace RESTful_API.Controllers
         {
             _postService = postService;
         }
-        
+
+        #region Get
         [HttpGet(ApiRoutes.Posts.GetAll)]
         public IActionResult GetAll()
         {
@@ -39,7 +40,30 @@ namespace RESTful_API.Controllers
 
             return Ok(post);
         }
+        #endregion
 
+        #region Put
+        [HttpPut(ApiRoutes.Posts.Update)]
+        public IActionResult Update([FromRoute] Guid postId, [FromBody] UpdatePostRequest request)
+        {
+            var post = new Post 
+            { 
+                Id = postId,
+                Name = request.Name
+            };
+
+            var updated = _postService.UpdatePost(post);
+            
+            if(updated)
+            {
+                return Ok(post);
+            }
+
+            return NotFound();
+        }
+        #endregion
+
+        #region Post
         [HttpPost(ApiRoutes.Posts.Create)]
         public IActionResult Create([FromBody] CreatePostRequest postRequest)
         {
@@ -60,5 +84,6 @@ namespace RESTful_API.Controllers
 
             return Created(locationUri, response);
         }
+        #endregion
     }
 }
