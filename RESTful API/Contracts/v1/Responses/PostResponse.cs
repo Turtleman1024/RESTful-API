@@ -7,6 +7,6 @@ namespace RESTful_API.Contracts.v1.Responses
 {
     public class PostResponse
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

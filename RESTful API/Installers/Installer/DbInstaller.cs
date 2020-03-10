@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RESTful_API.Data;
+using RESTful_API.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,11 @@ namespace RESTful_API.Installers
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<DataContext>();
+
+            services.AddSingleton<IPostService, PostService>();
         }
     }
 }
