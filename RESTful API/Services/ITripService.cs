@@ -8,12 +8,14 @@ namespace RESTful_API.Services
 {
     public interface ITripService
     {
-        List<Trip> GetTrips();
+        Task<List<Trip>> GetTripsAsync();
 
-        Trip GetTripById(Guid postId);
+        Task<Trip> GetTripByIdAsync(Guid postId);
 
-        bool UpdateTrip(Trip postToUpdate);
+        Task<bool> CreateTripAsync(Trip trip);
 
-        bool DeleteTrip(Guid tripId);
+        Task<bool> UpdateTripAsync(Trip postToUpdate);
+
+        Task<bool> DeleteTripAsync(Guid tripId);
     }
 }

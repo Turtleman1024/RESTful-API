@@ -22,7 +22,7 @@ namespace RESTful_API.Installers
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<DataContext>();
 
-            services.AddSingleton<ITripService, TripService>();
+            services.AddScoped<ITripService, TripService>();
         }
     }
 }

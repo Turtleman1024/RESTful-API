@@ -23,15 +23,15 @@ namespace RESTful_API.Controllers
 
         #region Get
         [HttpGet(ApiRoutes.Trips.GetAll)]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(_tripService.GetTrips());
+            return Ok(await _tripService.GetTripsAsync());
         }
 
         [HttpGet(ApiRoutes.Trips.Get)]
-        public IActionResult Get([FromRoute] Guid tripId)
+        public async Task<IActionResult> GetAsync([FromRoute] Guid tripId)
         {
-            var trip = _tripService.GetTripById(tripId);
+            var trip = await _tripService.GetTripByIdAsync(tripId);
 
             if(trip == null)
             {
@@ -44,7 +44,7 @@ namespace RESTful_API.Controllers
 
         #region Put
         [HttpPut(ApiRoutes.Trips.Update)]
-        public IActionResult Update([FromRoute] Guid tripId, [FromBody] UpdateTripRequest request)
+        public async Task<IActionResult> Update([FromRoute] Guid tripId, [FromBody] UpdateTripRequest request)
         {
             var trip = new Trip 
             { 
@@ -52,7 +52,7 @@ namespace RESTful_API.Controllers
                 Name = request.Name
             };
 
-            var updated = _tripService.UpdateTrip(trip);
+            var updated = await _tripService.UpdateTripAsync(trip);
             
             if(updated)
             {
@@ -65,16 +65,11 @@ namespace RESTful_API.Controllers
 
         #region Post
         [HttpPost(ApiRoutes.Trips.Create)]
-        public IActionResult Create([FromBody] CreateTripRequest tripRequest)
+        public async Task<IActionResult> Create([FromBody] CreateTripRequest tripRequest)
         {
-            var trip = new Trip { Id = tripRequest.Id };
+            var trip = new Trip { Name = tripRequest.Name };
 
-            if(trip.Id != Guid.Empty)
-            {
-                trip.Id = Guid.NewGuid();
-            }
-
-            _tripService.GetTrips().Add(trip);
+            await _tripService.CreateTripAsync(trip);
 
             var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.ToUriComponent()}";
 
@@ -88,9 +83,9 @@ namespace RESTful_API.Controllers
 
         #region Delete
         [HttpDelete(ApiRoutes.Trips.Delete)]
-        public IActionResult Delete([FromRoute] Guid tripId)
+        public async Task<IActionResult> Delete([FromRoute] Guid tripId)
         {
-            var deleted = _tripService.DeleteTrip(tripId);
+            var deleted = await _tripService.DeleteTripAsync(tripId);
 
             if (deleted)
             {

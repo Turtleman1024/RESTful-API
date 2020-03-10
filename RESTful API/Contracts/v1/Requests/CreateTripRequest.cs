@@ -7,6 +7,6 @@ namespace RESTful_API.Contracts.v1.Requests
 {
     public class CreateTripRequest
     {
-        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }

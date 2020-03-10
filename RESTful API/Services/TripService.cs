@@ -1,4 +1,6 @@
-﻿using RESTful_API.DomainModels;
+﻿using Microsoft.EntityFrameworkCore;
+using RESTful_API.Data;
+using RESTful_API.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,57 +10,51 @@ namespace RESTful_API.Services
 {
     public class TripService : ITripService
     {
-        private readonly List<Trip> _trips;
+        private readonly DataContext _dataContext;
 
-        public TripService()
+        public TripService(DataContext dataContext)
         {
-            _trips = new List<Trip>();
-            for (int i = 0; i < 5; i++)
-            {
-                _trips.Add(new Trip
-                {
-                    Id = Guid.NewGuid(),
-                    Name = $"Post Name: {i}"
-                });
-            }
+            _dataContext = dataContext;
         }
 
-        public bool DeleteTrip(Guid tripId)
+        public async Task<bool> CreateTripAsync(Trip trip)
         {
-            var trip = GetTripById(tripId);
+            await _dataContext.Trips.AddAsync(trip);
+            var created = await _dataContext.SaveChangesAsync();
+            return created > 0;
+        }
+
+        public async Task<bool> DeleteTripAsync(Guid tripId)
+        {
+            var trip = await GetTripByIdAsync(tripId);
+
             if(trip == null)
             {
                 return false;
             }
 
-            _trips.Remove(trip);
-            return true;
+            _dataContext.Trips.Remove(trip);
+            var deleted = await _dataContext.SaveChangesAsync();
+
+            return deleted > 0;
         }
 
-        public Trip GetTripById(Guid postId)
+        public async Task<Trip> GetTripByIdAsync(Guid tripId)
         {
-            return _trips.SingleOrDefault(x => x.Id == postId);
+            return await _dataContext.Trips.SingleOrDefaultAsync(x => x.Id == tripId);
         }
 
-        public List<Trip> GetTrips()
+        public async Task<List<Trip>> GetTripsAsync()
         {
-            return _trips;
+            return await _dataContext.Trips.ToListAsync();
         }
 
-        public bool UpdateTrip(Trip postToUpdate)
+        public async Task<bool> UpdateTripAsync(Trip tripToUpdate)
         {
-            var exists = GetTripById(postToUpdate.Id) != null;
+            _dataContext.Trips.Update(tripToUpdate);
+            var updated = await _dataContext.SaveChangesAsync();
 
-            if(!exists)
-            {
-                return false;
-            }
-
-            var index = _trips.FindIndex(x => x.Id == postToUpdate.Id);
-
-            _trips[index] = postToUpdate;
-
-            return true;
+            return updated > 0;
         }
     }
 }
