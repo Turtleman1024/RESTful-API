@@ -13,5 +13,7 @@ namespace RESTful_API.Services
         Post GetPostById(Guid postId);
 
         bool UpdatePost(Post postToUpdate);
+
+        bool DeletePost(Guid postId);
     }
 }

@@ -85,5 +85,20 @@ namespace RESTful_API.Controllers
             return Created(locationUri, response);
         }
         #endregion
+
+        #region Delete
+        [HttpDelete(ApiRoutes.Posts.Delete)]
+        public IActionResult Delete([FromRoute] Guid postId)
+        {
+            var deleted = _postService.DeletePost(postId);
+
+            if(deleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
+        }
+        #endregion
     }
 }
