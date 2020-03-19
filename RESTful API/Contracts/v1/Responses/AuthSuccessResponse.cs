@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace RESTful_API.Contracts.v1.Responses
 {
-    public class PostResponse
+    public class AuthSuccessResponse
     {
-        public Guid Id { get; set; }
+        public string Token { get; set; }
     }
 }

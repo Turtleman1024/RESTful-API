@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RESTful_API.DomainModels
+namespace RESTful_API.Contracts.v1.Requests
 {
-    public class Post
+    public class CreateTripRequest
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
     }
 }

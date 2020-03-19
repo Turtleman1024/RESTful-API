@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RESTful_API.DomainModels;
 
 namespace RESTful_API.Data
 {
@@ -12,5 +13,7 @@ namespace RESTful_API.Data
             : base(options)
         {
         }
+
+        public DbSet<Trip> Trips { get; set; }
     }
 }
