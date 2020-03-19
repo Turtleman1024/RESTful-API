@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RESTful_API.Contracts;
 using RESTful_API.Contracts.v1.Requests;
@@ -11,7 +13,7 @@ using RESTful_API.Services;
 
 namespace RESTful_API.Controllers
 {
-
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TripsController : Controller
     {
         private readonly ITripService _tripService;

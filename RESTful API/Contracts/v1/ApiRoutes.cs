@@ -23,5 +23,15 @@ namespace RESTful_API.Contracts
 
             public const string Create = Base + "/trips";
         }
+
+
+        //Not really a RESTful way of doing this
+        public static class Identity
+        {
+            public const string login = Base + "/identity/login";
+
+            public const string Register = Base + "/identity/register";
+
+        }
     }
 }

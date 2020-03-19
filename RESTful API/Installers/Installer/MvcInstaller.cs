@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RESTful_API.Options;
+using RESTful_API.Services;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +18,8 @@ namespace RESTful_API.Installers
             var jwtSettings = new JwtSettings();
             configuration.Bind(key: nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);
+
+            services.AddScoped<IIdentityService, IdentityService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
