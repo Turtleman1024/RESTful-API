@@ -79,7 +79,7 @@ namespace RESTful_API.Services
             return GenerateAuthenticationResultForUser(user);
         }
 
-        private AuthenticationResult GenerateAuthenticationResultForUser(IdentityUser newUser)
+        private AuthenticationResult GenerateAuthenticationResultForUser(IdentityUser user)
         {
             //Tokens
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -88,10 +88,10 @@ namespace RESTful_API.Services
             {
                 Subject = new ClaimsIdentity(claims: new[]
                 {
-                    new Claim(type: JwtRegisteredClaimNames.Sub, value: newUser.Email),
+                    new Claim(type: JwtRegisteredClaimNames.Sub, value: user.Email),
                     new Claim(type: JwtRegisteredClaimNames.Jti, value: Guid.NewGuid().ToString()),
-                    new Claim(type: JwtRegisteredClaimNames.Email, value: newUser.Email),
-                    new Claim(type: "id", value: newUser.Id)
+                    new Claim(type: JwtRegisteredClaimNames.Email, value: user.Email),
+                    new Claim(type: "id", value: user.Id)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

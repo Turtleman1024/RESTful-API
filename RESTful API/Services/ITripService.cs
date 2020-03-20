@@ -17,5 +17,7 @@ namespace RESTful_API.Services
         Task<bool> UpdateTripAsync(Trip postToUpdate);
 
         Task<bool> DeleteTripAsync(Guid tripId);
+
+        Task<bool> UserOwnsTripAsync(Guid tripId, string getUserId);
     }
 }

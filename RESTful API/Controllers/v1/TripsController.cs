@@ -9,6 +9,7 @@ using RESTful_API.Contracts;
 using RESTful_API.Contracts.v1.Requests;
 using RESTful_API.Contracts.v1.Responses;
 using RESTful_API.DomainModels;
+using RESTful_API.Extensions;
 using RESTful_API.Services;
 
 namespace RESTful_API.Controllers
@@ -48,11 +49,15 @@ namespace RESTful_API.Controllers
         [HttpPut(ApiRoutes.Trips.Update)]
         public async Task<IActionResult> Update([FromRoute] Guid tripId, [FromBody] UpdateTripRequest request)
         {
-            var trip = new Trip 
-            { 
-                Id = tripId,
-                Name = request.Name
-            };
+            var userOwnsTrip = await _tripService.UserOwnsTripAsync(tripId, HttpContext.GetUserId());
+
+            if (!userOwnsTrip)
+            {
+                return BadRequest(error: new {error = "You do not have permissions to update this trip"});
+            }
+
+            var trip = await _tripService.GetTripByIdAsync(tripId);
+            trip.Name = request.Name;
 
             var updated = await _tripService.UpdateTripAsync(trip);
             
@@ -69,7 +74,11 @@ namespace RESTful_API.Controllers
         [HttpPost(ApiRoutes.Trips.Create)]
         public async Task<IActionResult> Create([FromBody] CreateTripRequest tripRequest)
         {
-            var trip = new Trip { Name = tripRequest.Name };
+            var trip = new Trip 
+            { 
+                Name = tripRequest.Name, 
+                UserId = HttpContext.GetUserId()
+            };
 
             await _tripService.CreateTripAsync(trip);
 
@@ -87,6 +96,13 @@ namespace RESTful_API.Controllers
         [HttpDelete(ApiRoutes.Trips.Delete)]
         public async Task<IActionResult> Delete([FromRoute] Guid tripId)
         {
+            var userOwnsTrip = await _tripService.UserOwnsTripAsync(tripId, HttpContext.GetUserId());
+
+            if (!userOwnsTrip)
+            {
+                return BadRequest(error: new { error = "You do not have permissions to delete this trip" });
+            }
+
             var deleted = await _tripService.DeleteTripAsync(tripId);
 
             if (deleted)

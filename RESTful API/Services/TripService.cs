@@ -56,5 +56,23 @@ namespace RESTful_API.Services
 
             return updated > 0;
         }
+
+        public async Task<bool> UserOwnsTripAsync(Guid tripId, string userId)
+        {
+            var trip = await _dataContext.Trips.AsNoTracking().SingleOrDefaultAsync(predicate: x => x.Id == tripId);
+
+            if (trip == null)
+            {
+                return false;
+            }
+
+            if (trip.UserId != userId)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
     }
 }
